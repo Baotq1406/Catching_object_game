@@ -369,6 +369,7 @@ class Game {
         this.gameOver = false;
         this.spawnTimer = 0;
         this.spawnTime = 1.1;
+        this.numObstacles = 1;
         this.fallSpeed = FALL_SPEED;
         this.obstacleSpeed = OBSTACLE_SPEED;
         this.fallingObjects = [];
