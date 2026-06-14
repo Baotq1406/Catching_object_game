@@ -20,12 +20,11 @@ const CATCHER_HEIGHT = 28;
 const START_LIVES = 3;
 const MAX_LIVES = 3;
 const MAX_SPEED = 1200;
+const FALL_SPEED = 150;
+const OBSTACLE_SPEED = 200;
 const UPGRADE_VELOCITY = 50;
 const ACHIEVEMENT_SCORE = 20;
 
-let FALL_SPEED = 150;
-let OBSTACLE_SPEED = 200;
-let numObstacles = 1;
 
 
 class Game {
@@ -44,6 +43,10 @@ class Game {
         this.oldTimeStamp = 0;
         this.spawnTimer = 0;
         this.spawnTime = 1.1;
+        this.numObstacles = 1;
+        this.fallSpeed = FALL_SPEED;
+        this.obstacleSpeed = OBSTACLE_SPEED;
+
 
         this.fallingObjects = [];
         this.obstacles = [];
@@ -179,6 +182,8 @@ class Game {
         //Player death
         if (this.lives <= 0) {
             this.showGameOver();
+            this.fallSpeed = FALL_SPEED;
+            this.obstacleSpeed = OBSTACLE_SPEED;
         }
 
         // this.fallingObjects = this.fallingObjects.filter((fallingObject) => {
@@ -318,7 +323,7 @@ class Game {
             // Set là một tập hợp chỉ chứa các giá trị không trùng nhau
             const usedCols = new Set();
 
-            for (let i = 0; i < numObstacles; i++) {
+            for (let i = 0; i < this.numObstacles; i++) {
 
                 let randomCol;
 
@@ -331,7 +336,7 @@ class Game {
                 let xObstacleObj = randomCol * colWidth + (colWidth - 44) / 2;
 
                 this.obstacles.push(
-                    new Obstacle(this.context, xObstacleObj, -36, 44, 28, OBSTACLE_SPEED)
+                    new Obstacle(this.context, xObstacleObj, -36, 44, 28, this.obstacleSpeed)
                 );
             }
 
@@ -341,14 +346,14 @@ class Game {
         const shouldSpawnSpecial = Math.random() < 0.3;
 
         if (!shouldSpawnSpecial) {
-            this.fallingObjects.push(new FallingObject(this.context, xFallingObj, -32, 32, FALL_SPEED));
+            this.fallingObjects.push(new FallingObject(this.context, xFallingObj, -32, 32, this.fallSpeed));
             return;
         }
 
         if (Math.random() < 0.7) {
-            this.star.push(new Star(this.context, xFallingObj, -32, 32, FALL_SPEED));
+            this.star.push(new Star(this.context, xFallingObj, -32, 32, this.fallSpeed));
         } else {
-            this.healingObjects.push(new HealingObj(this.context, xFallingObj, -32, 32, FALL_SPEED));
+            this.healingObjects.push(new HealingObj(this.context, xFallingObj, -32, 32, this.fallSpeed));
         }
     }
 
@@ -429,29 +434,31 @@ class Game {
         //console.log(this.tempPoint);
         if (this.score > 50) {
             //numObstacles = 2;
-            numObstacles = Math.floor(Math.random() * 2) + 1;
+            this.numObstacles = Math.floor(Math.random() * 2) + 1;
         }
 
         if (this.score > 100) {
             //numObstacles = 3;
-            numObstacles = Math.floor(Math.random() * 2) + 2;
+            this.spawnTime = 0.9;
+            this.numObstacles = Math.floor(Math.random() * 2) + 2;
         }
 
         if (this.score > 150) {
-            numObstacles = Math.floor(Math.random() * 3) + 2; 
+            this.numObstacles = Math.floor(Math.random() * 3) + 2; 
         }
 
         if (this.score > 200) {
-            numObstacles = Math.floor(Math.random() * 3) + 3; 
+            this.spawnTime = 0.7;
+            this.numObstacles = Math.floor(Math.random() * 3) + 3; 
         }
 
         if (this.tempPoint < ACHIEVEMENT_SCORE) {
             return;
         }
 
-        FALL_SPEED = Math.min(FALL_SPEED + UPGRADE_VELOCITY, MAX_SPEED);
-        OBSTACLE_SPEED = Math.min(OBSTACLE_SPEED + UPGRADE_VELOCITY, MAX_SPEED);
-        //console.log("Upgrade! FALL_SPEED: ", FALL_SPEED, ", OBSTACLE_SPEED: ", OBSTACLE_SPEED);
+        this.fallSpeed = Math.min(this.fallSpeed + UPGRADE_VELOCITY, MAX_SPEED);
+        this.obstacleSpeed = Math.min(this.obstacleSpeed + UPGRADE_VELOCITY, MAX_SPEED);
+        //console.log("Upgrade! FALL_SPEED: ", this.fallSpeed, ", OBSTACLE_SPEED: ", this.obstacleSpeed);
         this.tempPoint = 0;
     }
 
