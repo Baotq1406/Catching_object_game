@@ -182,8 +182,6 @@ class Game {
         //Player death
         if (this.lives <= 0) {
             this.showGameOver();
-            this.fallSpeed = FALL_SPEED;
-            this.obstacleSpeed = OBSTACLE_SPEED;
         }
 
         // this.fallingObjects = this.fallingObjects.filter((fallingObject) => {
@@ -370,6 +368,9 @@ class Game {
         this.run = true;
         this.gameOver = false;
         this.spawnTimer = 0;
+        this.spawnTime = 1.1;
+        this.fallSpeed = FALL_SPEED;
+        this.obstacleSpeed = OBSTACLE_SPEED;
         this.fallingObjects = [];
         this.obstacles = [];
         this.star = [];
