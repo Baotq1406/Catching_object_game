@@ -284,7 +284,7 @@ class Game {
         //test
         //let x = 18 * colWidth + (colWidth - 32) / 2;
         //let x = 0 * colWidth + (colWidth - 32) / 2;
-        let testSpeed = 800;
+        //let testSpeed = 800;
 
         // if (shouldSpawnObstacle) {
         //     // Obstacle example:
@@ -338,14 +338,14 @@ class Game {
             return;
         }
 
-        const shouldSpawnSpecial = Math.random() < 0.5;
+        const shouldSpawnSpecial = Math.random() < 0.3;
 
         if (!shouldSpawnSpecial) {
             this.fallingObjects.push(new FallingObject(this.context, xFallingObj, -32, 32, FALL_SPEED));
             return;
         }
 
-        if (Math.random() < 0.5) {
+        if (Math.random() < 0.7) {
             this.star.push(new Star(this.context, xFallingObj, -32, 32, FALL_SPEED));
         } else {
             this.healingObjects.push(new HealingObj(this.context, xFallingObj, -32, 32, FALL_SPEED));
