@@ -31,3 +31,6 @@ Objects fall from the top of the screen.
 3. Finish `Obstacle.update()` and `isOffScreen()` in `obstacle.js`.
 4. Finish `spawnItems()` in `game.js`.
 5. Finish collision and cleanup logic inside `Game.update()`.
+
+## Link demo game: 
+https://baotq1406.github.io/Catching_object_game/
